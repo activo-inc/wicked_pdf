@@ -18,6 +18,15 @@ class WickedPdf
       end.join("\n")
       css_text.respond_to?(:html_safe) ? css_text.html_safe : css_text
     end
+    
+    def wicked_pdf_css_text(*sources)
+      css_dir = WickedPdfHelper.root_path.join('public', 'stylesheets')
+      css_text = sources.map do |source|
+        source = WickedPdfHelper.add_extension(source, 'css')
+        css_dir.join(source)
+      end.join
+      css_text
+    end
 
     def wicked_pdf_image_tag(img, options = {})
       image_tag "file:///#{WickedPdfHelper.root_path.join('public', 'images', img)}", options
